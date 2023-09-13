@@ -1,0 +1,37 @@
+# @name get-prompts
+GET http://localhost:3333/prompts
+
+###
+
+# @name upload
+POST http://localhost:3333/videos
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="example.mp3"
+Content-Type: audio/mpeg
+
+< ./example.mp3
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+###
+
+# @name create-transcription
+POST http://localhost:3333/videos/f5faf1f2-ab50-48be-a0f4-0438e7fb3e4c/transcription
+Content-Type: application/json
+
+{
+  "prompt": "naldo, auge, funk, musica, podcast"
+}
+
+###
+
+# @name generate-ai-completion
+POST http://localhost:3333/videos/ai/complete
+Content-Type: application/json
+
+{
+  "videoId": "f5faf1f2-ab50-48be-a0f4-0438e7fb3e4c",
+  "temperature": 0.5,
+  "template": "Gere um resumo sucinto da transcrição do vídeo informado a seguir: '''{transcription}'''"
+}
